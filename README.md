@@ -1,4 +1,4 @@
-#Numpy normalize angles
+#Angles normalizer (with or without Numpy)
 
 A little tool to normalize angles (e.g. latitude and longitude). 
 The main feature is to use Numpy arrays as input data.
