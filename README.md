@@ -10,7 +10,7 @@ You can solve a common geographical problem with this library: Bounding box cros
 
 ##Usage
 * Example 1: input data are Numpy array
-```
+```python
 import numpy as np
 from lib.numpynormalizeangles import NumpyNormalizeAngles
 
@@ -31,7 +31,7 @@ print result
 ``` 
 
 * Example 2: input data are an integer
-```
+```python
 from lib.numpynormalizeangles import NumpyNormalizeAngles
 
 
