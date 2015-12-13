@@ -38,9 +38,11 @@ from math import floor, ceil
 
 class NumpyNormalizeAngles(object):
 
-    def __init__(self, usenumpy=True, vect=False):
+    def __init__(self, usenumpy=True, vect=True):
         """
         If usenumpy=True Numpy is used (default)
+
+        vect=False is only for testing purposes. You must use vect=True.
 
         """
 
@@ -70,63 +72,14 @@ class NumpyNormalizeAngles(object):
             if isinstance(angles, np.ndarray):
                 raise ValueError("---Error: angles is a numpy array\n\tTry with usenumpy=True (default option)")
 
-            norm_angles = self.__computeAngles(angles, lower, upper)
+            norm_angles = self.__computeAnglesNoVect(angles, lower, upper)
 
         return norm_angles
 
-
-    def __computeAngles(self, num, lower, upper, b=False):
+    def __computeAnglesVect(self, num, lower, upper):
         """
         Normalize angle to range (lower, upper).
-
-        This method is based on a function developed by Prasanth Nair
-        https://github.com/phn/angles
-
-        """
-
-        # abs(num + upper) and abs(num - lower) are needed, instead of
-        # abs(num), since the lower and upper limits need not be 0. We need
-        # to add half size of the range, so that the final result is lower +
-        # <value> or upper - <value>, respectively.
-        res = num
-        if not b:
-            if lower >= upper:
-                raise ValueError("Invalid lower and upper limits: (%s, %s)" %
-                                 (lower, upper))
-
-            res = num
-
-            if num > upper or num == lower:
-                num = lower + abs(num + upper) % (abs(lower) + abs(upper))
-
-            if num < lower or num == upper:
-                num = upper - abs(num - lower) % (abs(lower) + abs(upper))
-
-            res = lower if num == upper else num
-        else:
-            total_length = abs(lower) + abs(upper)
-
-            if num < -total_length:
-                num += ceil(num / (-2 * total_length)) * 2 * total_length
-
-            if num > total_length:
-                num -= floor(num / (2 * total_length)) * 2 * total_length
-
-            if num > upper:
-                num = total_length - num
-
-            if num < lower:
-                num = -total_length - num
-
-            res = num
-
-        res *= 1.0  # Make all numbers float, to be consistent
-
-        return res
-
-    def __computeAnglesVect(self, num, lower, upper, b=False):
-        """
-        Normalize angle to range (lower, upper).
+        Vectorized computation (with Numpy).
 
         This method is based on a function developed by Prasanth Nair
         https://github.com/phn/angles
@@ -140,33 +93,45 @@ class NumpyNormalizeAngles(object):
 
         res = num.copy()
 
-        if not b:
-            if lower >= upper:
-                raise ValueError("Invalid lower and upper limits: (%s, %s)" % (lower, upper))
+        if lower >= upper:
+            raise ValueError("Invalid lower and upper limits: (%s, %s)" % (lower, upper))
 
-            res[(num > upper) | (num == lower)] =  lower + np.abs(res[(num > upper) | (num == lower)] + upper) % (abs(lower) + abs(upper))
+        res[(num > upper) | (num == lower)] =  lower + np.abs(res[(num > upper) | (num == lower)] + upper) % (abs(lower) + abs(upper))
 
-            res[(num < lower) | (num == upper)] = upper - np.abs(res[(num < lower) | (num == upper)] - lower) % (abs(lower) + abs(upper))
+        res[(num < lower) | (num == upper)] = upper - np.abs(res[(num < lower) | (num == upper)] - lower) % (abs(lower) + abs(upper))
 
-            res[res == upper] = lower
-        else:
-            pass
-            # total_length = abs(lower) + abs(upper)
-            #
-            # if num < -total_length:
-            #     num += ceil(num / (-2 * total_length)) * 2 * total_length
-            #
-            # if num > total_length:
-            #     num -= floor(num / (2 * total_length)) * 2 * total_length
-            #
-            # if num > upper:
-            #     num = total_length - num
-            #
-            # if num < lower:
-            #     num = -total_length - num
-            #
-            # res = num
+        res[res == upper] = lower
 
-        # res *= 1.0  # Make all numbers float, to be consistent
+        return res
+
+
+    def __computeAnglesNoVect(self, num, lower, upper):
+        """
+        Normalize angle to range (lower, upper).
+        Non vectorized computation.
+
+        This method is based on a function developed by Prasanth Nair
+        https://github.com/phn/angles
+
+        """
+
+        # abs(num + upper) and abs(num - lower) are needed, instead of
+        # abs(num), since the lower and upper limits need not be 0. We need
+        # to add half size of the range, so that the final result is lower +
+        # <value> or upper - <value>, respectively.
+        res = num
+
+        if lower >= upper:
+            raise ValueError("Invalid lower and upper limits: (%s, %s)" % (lower, upper))
+
+        if num > upper or num == lower:
+            num = lower + abs(num + upper) % (abs(lower) + abs(upper))
+
+        if num < lower or num == upper:
+            num = upper - abs(num - lower) % (abs(lower) + abs(upper))
+
+        res = lower if num == upper else num
+
+        res *= 1.0  # Make all numbers float, to be consistent
 
         return res
