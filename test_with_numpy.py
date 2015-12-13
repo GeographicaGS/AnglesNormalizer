@@ -40,7 +40,7 @@ upper = 180
 
 arr_angles = np.linspace(180,-180,100000000)
 
-npna = NumpyNormalizeAngles()
+npna = NumpyNormalizeAngles(vect=False)
 
 result = npna.getValues(arr_angles, lower=lower, upper=upper)
 
