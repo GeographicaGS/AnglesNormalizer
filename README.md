@@ -1,6 +1,6 @@
 #Angles normalizer (with or without Numpy)
 
-A little tool to normalize angles (e.g. latitude and longitude). 
+A little tool to normalize angles (e.g. latitude and longitude).
 The main feature is to use Numpy arrays as input data.
 
 You can solve a common geographical problem with this library: Bounding box crossing longitude 180 deg.
@@ -18,9 +18,7 @@ from lib.numpynormalizeangles import NumpyNormalizeAngles
 lower = -180
 upper = 180
 
-arr_angles = np.array([[-175.5, 185.2, 210.],
-                       [-50., 195.1, 3.2],
-                       [178.4, 23., 181.7]])
+arr_angles = np.linspace(180,-180,10000)
 
 npna = NumpyNormalizeAngles()
 
@@ -28,7 +26,7 @@ result = npna.getValues(arr_angles, lower=lower, upper=upper)
 
 print "Normalize angles with Numpy\n"
 print result
-``` 
+```
 
 * Example 2: input data are an integer
 ```python
@@ -57,4 +55,3 @@ https://github.com/phn/angles
 ##License
 Released under BSD.
 http://www.opensource.org/licenses/bsd-license.php.
-
