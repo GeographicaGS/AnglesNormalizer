@@ -64,7 +64,7 @@ class NumpyNormalizeAngles(object):
             if self.__vect:
                 norm_angles = self.__computeAnglesVect(angles, lower, upper)
             else:
-                vect_norm = np.vectorize(self.__computeAngles)
+                vect_norm = np.vectorize(self.__computeAnglesNoVect)
                 norm_angles = vect_norm(angles, lower, upper)
 
 
