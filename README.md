@@ -18,14 +18,23 @@ from lib.numpynormalizeangles import NumpyNormalizeAngles
 lower = -180
 upper = 180
 
-arr_angles = np.linspace(180,-180,10000)
-
 npna = NumpyNormalizeAngles()
 
-result = npna.getValues(arr_angles, lower=lower, upper=upper)
+arr_angles_1 = np.array([[-175.5, 185.2, 210.],
+                       [-50., 195.1, 3.2],
+                       [178.4, 23., 181.7]])
 
-print "Normalize angles with Numpy\n"
-print result
+result_1 = npna.getValues(arr_angles, lower=lower, upper=upper)
+
+print("Normalize angles with Numpy (1):")
+print(result)
+
+arr_angles_2 = np.linspace(180, -180, 10000)
+
+result_2 = npna.getValues(arr_angles, lower=lower, upper=upper)
+
+print("Normalize angles with Numpy (2):")
+print(result)           
 ```
 
 * Example 2: input data are an integer
@@ -42,8 +51,8 @@ npna = NumpyNormalizeAngles(usenumpy=False)
 
 result = npna.getValues(angle, lower=lower, upper=upper)
 
-print "Normalize angles without Numpy\n"
-print result
+print("Normalize angles without Numpy:")
+print(result)
 ```
 
 
