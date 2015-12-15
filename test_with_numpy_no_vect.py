@@ -34,11 +34,7 @@ from lib.numpynormalizeangles import NumpyNormalizeAngles
 lower = -180
 upper = 180
 
-# arr_angles = np.array([[-175.5, 185.2, 210.],
-#                        [-50., 195.1, 3.2],
-#                        [178.4, 23., 181.7]])
-
-arr_angles = np.linspace(180,-180,100000000)
+arr_angles = np.linspace(180,-180,100000)
 
 npna = NumpyNormalizeAngles(vect=False)
 
