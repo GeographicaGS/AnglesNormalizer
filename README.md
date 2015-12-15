@@ -24,17 +24,17 @@ arr_angles_1 = np.array([[-175.5, 185.2, 210.],
                        [-50., 195.1, 3.2],
                        [178.4, 23., 181.7]])
 
-result_1 = npna.getValues(arr_angles, lower=lower, upper=upper)
+result_1 = npna.getValues(arr_angles_1, lower=lower, upper=upper)
 
 print("Normalize angles with Numpy (1):")
-print(result)
+print(result_1)
 
-arr_angles_2 = np.linspace(180, -180, 10000)
+arr_angles_2 = np.linspace(180, -180, 100000)
 
-result_2 = npna.getValues(arr_angles, lower=lower, upper=upper)
+result_2 = npna.getValues(arr_angles_2, lower=lower, upper=upper)
 
 print("Normalize angles with Numpy (2):")
-print(result)           
+print(result_2)        
 ```
 
 * Example 2: input data are an integer
