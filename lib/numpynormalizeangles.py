@@ -85,11 +85,6 @@ class NumpyNormalizeAngles(object):
 
         """
 
-        # abs(num + upper) and abs(num - lower) are needed, instead of
-        # abs(num), since the lower and upper limits need not be 0. We need
-        # to add half size of the range, so that the final result is lower +
-        # <value> or upper - <value>, respectively.
-
         res = num.copy()
 
         if lower >= upper:
@@ -114,10 +109,6 @@ class NumpyNormalizeAngles(object):
 
         """
 
-        # abs(num + upper) and abs(num - lower) are needed, instead of
-        # abs(num), since the lower and upper limits need not be 0. We need
-        # to add half size of the range, so that the final result is lower +
-        # <value> or upper - <value>, respectively.
         res = num
 
         if lower >= upper:
